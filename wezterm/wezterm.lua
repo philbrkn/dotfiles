@@ -11,7 +11,7 @@ config.window_close_confirmation = "NeverPrompt"
 config.window_decorations = "RESIZE"
 config.default_cursor_style = "BlinkingBar"
 config.color_scheme = "Tokyo Night"
-config.window_background_opacity = 0.9
+-- config.window_background_opacity = 0.9
 -- config.font = wezterm.font("JetBrains Mono", { weight = "Bold" })
 config.font_size = 12.5
 config.window_padding = {
@@ -20,17 +20,27 @@ config.window_padding = {
     top = 2,
     bottom = 0,
 }
--- config.background = {
---     	{
--- 		source = {
--- 			Color = "#282c35",
--- 		},
--- 		width = "100%",
--- 		height = "100%",
--- 		-- opacity = 0.55,
--- 		opacity = 0.90,
--- 		-- opacity = 1,
--- 	},
--- }
+config.background = {
+    {
+        source = {
+            File = "/Users/" .. os.getenv("USER") .. "/.config/wezterm/nuweiba.jpg",
+        },
+        width = "100%",
+        height = "100%",
+        -- opacity = 0.55,
+        opacity = 0.90,
+        -- opacity = 1,
+    },
+    {
+        source = {
+            Color = "#282c35",
+        },
+        width = "100%",
+        height = "100%",
+        -- opacity = 0.55,
+        opacity = 0.91,
+        -- opacity = 1,
+    },
+}
 
 return config
