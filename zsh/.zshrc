@@ -11,3 +11,8 @@ ZSH_HIGHLIGHT_STYLES[path_prefix]=none
 
 # Activate autosuggestions
 source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+
+# eza library
+alias ls='eza --icons'
+alias ll='eza -la --icons'
+alias tree='eza --tree --icons'
