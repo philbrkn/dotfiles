@@ -16,3 +16,5 @@ source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 alias ls='eza --icons'
 alias ll='eza -la --icons'
 alias tree='eza --tree --icons'
+
+alias e='exit'
