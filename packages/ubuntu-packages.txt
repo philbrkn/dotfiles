@@ -17,7 +17,7 @@ zsh-autosuggestions
 zsh-syntax-highlighting
 
 # File tools
-exa  # Ubuntu equivalent of eza
+eza  # Ubuntu equivalent of eza
 
 # Fonts
 fonts-jetbrains-mono
