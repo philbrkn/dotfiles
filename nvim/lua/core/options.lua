@@ -1,7 +1,42 @@
 vim.o.hlsearch = false -- Set highlight on search
 vim.wo.number = true -- Make line numbers default
 vim.o.mouse = 'a' -- Enable mouse mode
-vim.o.clipboard = 'unnamedplus' -- Sync clipboard between OS and Neovim.
+if vim.env.SSH_TTY then
+  vim.opt.clipboard:append 'unnamedplus'
+  local function paste()
+    return vim.split(vim.fn.getreg '', '\n')
+  end
+  vim.g.clipboard = {
+    name = 'OSC 52',
+    copy = {
+      ['+'] = require('vim.ui.clipboard.osc52').copy '+',
+      ['*'] = require('vim.ui.clipboard.osc52').copy '*',
+    },
+    paste = {
+      ['+'] = paste,
+      ['*'] = paste,
+    },
+  }
+end
+vim.opt.guicursor = ''
+-- vim.o.clipboard = 'unnamedplus'
+-- local function paste()
+--   return {
+--     vim.fn.split(vim.fn.getreg '', '\n'),
+--     vim.fn.getregtype '',
+--   }
+-- end
+-- vim.g.clipboard = {
+--   name = 'OSC 52',
+--   copy = {
+--     ['+'] = require('vim.ui.clipboard.osc52').copy,
+--     ['*'] = require('vim.ui.clipboard.osc52').copy,
+--   },
+--   paste = {
+--     ['+'] = paste,
+--     ['*'] = paste,
+--   },
+-- }
 vim.o.breakindent = true -- Enable break indent
 vim.o.undofile = true -- Save undo history
 vim.o.ignorecase = true -- Case-insensitive searching UNLESS \C or capital in search
@@ -41,3 +76,33 @@ vim.opt.shortmess:append 'c' -- don't give |ins-completion-menu| messages
 vim.opt.iskeyword:append '-' -- hyphenated words recognized by searches
 vim.opt.formatoptions:remove { 'c', 'r', 'o' } -- don't insert the current comment leader automatically for auto-wrapping comments using 'textwidth', hitting <Enter> in insert mode, or hitting 'o' or 'O' in normal mode.
 vim.opt.runtimepath:remove '/usr/share/vim/vimfiles' -- separate vim plugins from neovim in case vim still in use
+
+-- Test function to compare both methods
+function test_clipboard_vs_manual()
+  local test_text = 'clipboard_test_' .. os.time()
+
+  print('=== Testing with text: ' .. test_text .. ' ===')
+
+  -- Method 1: Use nvim's clipboard provider directly
+  print '1. Calling nvim clipboard provider...'
+  local clipboard_copy = vim.g.clipboard.copy['+']
+  clipboard_copy { test_text }
+  print '   - Called clipboard provider'
+
+  -- Wait a moment
+  vim.cmd 'sleep 1'
+
+  -- Method 2: Manual OSC 52 (we know this works)
+  print '2. Sending manual OSC 52...'
+  local base64 = vim.fn.system({ 'base64' }, test_text):gsub('\n', '')
+  local osc52 = string.format('\027]52;c;%s\007', base64)
+  io.stderr:write(osc52)
+  io.stderr:flush()
+  print '   - Sent manual OSC 52'
+
+  print '=== Test complete ==='
+  print 'Check your Mac clipboard - which text appeared?'
+  print "- If only manual OSC 52 worked: nvim's provider is broken"
+  print '- If both worked: the yank->clipboard connection is broken'
+  print '- If neither worked: terminal/connection issue'
+end
