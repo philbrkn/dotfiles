@@ -17,6 +17,9 @@ starship
 zsh-autosuggestions
 zsh-syntax-highlighting
 
+# for ssh
+mosh
+
 # File tools
 eza  # Ubuntu equivalent of eza
 
