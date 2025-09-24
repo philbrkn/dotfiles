@@ -3,6 +3,7 @@ $directory\
 $git_branch\
 $git_status\
 $fill\
+$conda\
 $python\
 $lua\
 $nodejs\
@@ -27,12 +28,6 @@ truncation_length = 3
 truncation_symbol = '…/'
 truncate_to_repo = false
 
-[directory.substitutions]
-'Documents' = '󰈙'
-'Downloads' = ' '
-'Music' = ' '
-'Pictures' = ' '
-
 [git_branch]
 style = 'fg:green'
 symbol = ' '
@@ -41,6 +36,12 @@ format = '[on](white) [$symbol$branch ]($style)'
 [git_status]
 style = 'fg:red'
 format = '([$all_status$ahead_behind]($style) )'
+
+[conda]
+style = 'bold fg:blue'
+symbol = '󱔎 '
+format = '[$symbol$environment]($style) '
+ignore_base = false
 
 [fill]
 symbol = ' '

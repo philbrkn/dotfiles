@@ -9,6 +9,7 @@ set number " Enable line numbers
 set mouse=a " Enable mouse mode
 set breakindent " Enable break indent
 set undofile " Save undo history
+set undodir=~/.vim/undodir
 set ignorecase " Case-insensitive searching unless \C or capital in search
 set smartcase " Enable smart case
 set signcolumn=yes " Keep signcolumn on by default
